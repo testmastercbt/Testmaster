@@ -1,0 +1,39 @@
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .instructions-title {
+            font-size: 24px;
+            color: #004;
+            margin-bottom: 20px;
+        }
+        ol.instructions-list {
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+        .attempts {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .start-btn {
+            background-color: #004;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .start-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .notice {
+            margin-top: 15px;
+            color: red;
+        }

@@ -1,0 +1,241 @@
+<?php
+// Configuration
+$db_host = 'localhost';
+$db_username = 'root';
+$db_password = '';
+$db_name = 'testmaster_db';
+
+// Connect to the database
+$conn = new mysqli($db_host, $db_username, $db_password, $db_name);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Start session
+session_start();
+
+// Check if form is submitted
+if (isset($_POST['login'])) {
+    $matric_number = $_POST['matric_number'];
+    $password = $_POST['password'];
+
+    if (empty($matric_number) || empty($password)) {
+        $error = "Please fill in both fields.";
+    } else {
+        // Query to check user credentials
+        $sql = "SELECT * FROM users WHERE matric_number = '$matric_number'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if ($password == $row['password']) {
+                // Store user details in session
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['full_name'] = $row['full_name'];
+                $_SESSION['matric_number'] = $row['matric_number'];
+
+                // Redirect to dashboard
+                header('Location: dashboard.php');
+                exit;
+            } else {
+                $error = "Invalid password.";
+            }
+        } else {
+            $error = "User not found.";
+        }
+    }
+}
+
+// Close connection
+$conn->close();
+?>
+
+<DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Log In | TestMaster</title>
+    <link rel="stylesheet" href="login.css">
+</head>    
+<body>
+    <form action="" method="post">
+        <p>Matric Number:</p>
+        <input type="text" name="matric_number" class="reg-no" placeholder="e.g U24CO1000" required>
+        <p>Password:</p>
+        <input type="password" name="password" class="password" placeholder="Password" required>
+        <h4 class="c-signuptext">Don't have an account?<button id="c-signup" class="csignup">Sign Up</button></h4>
+        <input type="submit" value="Log In" name="login" class="submit-btn">
+        <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
+    </form>
+</body>
+
+
+
+
+
+
+
+<?php
+require_once 'config.php';
+session_start();
+
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $matric_number = strtoupper(trim($_POST['matric_number']));
+    $password = $_POST['password'];
+    $department = trim($_POST['department']);
+    $level = trim($_POST['level']);
+    $time_created = date("Y-m-d H:i:s");
+
+    // Validate input
+    if (empty($name) || empty($email) || empty($matric_number) || empty($password) || empty($department) || empty($level)) {
+        $errors[] = "All fields are required.";
+    }
+
+    // Check if matric/email already exists
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? OR matric_number = ?");
+    $stmt->execute([$email, $matric_number]);
+    if ($stmt->rowCount() > 0) {
+        $errors[] = "Email or Matric Number already exists.";
+    }
+
+    if (empty($errors)) {
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert into DB
+        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, matric_number, role, department, level, time_created) VALUES (?, ?, ?, ?, 'free', ?, ?, ?)");
+        $stmt->execute([$name, $email, $hashedPassword, $matric_number, $department, $level, $time_created]);
+
+        $_SESSION['success'] = "Registration successful. You can now log in.";
+        header("Location: login.php");
+        exit;
+    }
+}
+?>
+
+
+
+
+
+<?php
+require_once 'config.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$userId = $_SESSION['user_id'];
+$name = $_SESSION['name'];
+$email = $_SESSION['matric_number']; // or email if stored
+$role = $_SESSION['role'];
+
+// 1. Get enrolled course count
+$courseQuery = $pdo->prepare("SELECT COUNT(*) FROM enrollments WHERE user_id = ?");
+$courseQuery->execute([$userId]);
+$courseCount = $courseQuery->fetchColumn();
+
+// 2. Get exam count
+$examQuery = $pdo->prepare("SELECT COUNT(*) FROM exams WHERE user_id = ?");
+$examQuery->execute([$userId]);
+$examCount = $examQuery->fetchColumn();
+
+// 3. Average score
+$avgQuery = $pdo->prepare("SELECT AVG(score) FROM exams WHERE user_id = ?");
+$avgQuery->execute([$userId]);
+$averageScore = round($avgQuery->fetchColumn() ?: 0);
+
+// 4. Study hours (placeholder for now, unless you're tracking them)
+$studyHours = 24;
+
+// 5. My courses (titles + codes)
+$coursesStmt = $pdo->prepare("
+    SELECT c.title, c.course_code 
+    FROM enrollments e
+    JOIN courses c ON e.course_id = c.id
+    WHERE e.user_id = ?
+    LIMIT 4
+");
+$coursesStmt->execute([$userId]);
+$myCourses = $coursesStmt->fetchAll();
+
+// 6. Recent activity
+$activitiesStmt = $pdo->prepare("
+    SELECT action, timestamp 
+    FROM activities 
+    WHERE user_id = ?
+    ORDER BY timestamp DESC 
+    LIMIT 3
+");
+$activitiesStmt->execute([$userId]);
+$recentActivities = $activitiesStmt->fetchAll();
+?>
+
+
+<div class="user-name">Mukhiteee</div>
+
+
+<div class="user-name"><?= htmlspecialchars($name) ?></div>
+
+
+<div class="user-email"><?= htmlspecialchars($email) ?></div>
+
+
+<span class="subscription-badge free-plan">Free Plan</span>
+
+
+
+<span class="subscription-badge <?= $role === 'premium' ? 'paid-plan' : 'free-plan' ?>">
+    <?= ucfirst($role) ?> Plan
+</span>
+
+
+
+
+<div class="stat-number"><?= $courseCount ?></div>
+<div class="stat-label">Courses Enrolled</div>
+
+<div class="stat-number"><?= $examCount ?></div>
+<div class="stat-label">Exams Completed</div>
+
+<div class="stat-number"><?= $averageScore ?>%</div>
+<div class="stat-label">Average Score</div>
+
+<div class="stat-number"><?= $studyHours ?></div>
+<div class="stat-label">Hours Studied</div>
+
+
+
+<?php foreach ($myCourses as $course): ?>
+    <div class="action-card" onclick="startCourse()">
+        <div class="action-icon">📖</div>
+        <div class="action-title"><?= $course['course_code'] ?></div>
+        <div class="action-description"><?= $course['title'] ?></div>
+    </div>
+<?php endforeach; ?>
+
+
+
+<?php foreach ($recentActivities as $activity): ?>
+    <div class="activity-item">
+        <div class="activity-icon">✅</div>
+        <div class="activity-content">
+            <div class="activity-title"><?= $activity['action'] ?></div>
+            <div class="activity-time"><?= date('M d, H:i a', strtotime($activity['timestamp'])) ?></div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+
+    <?php
+    session_start();
+    session_destroy();
+    header("Location: login.php");
+    exit;
+    ?>

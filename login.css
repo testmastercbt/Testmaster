@@ -1,0 +1,65 @@
+form {
+    margin: 20vh auto;
+    display: grid;
+    background-color: white;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.2);
+    width: 300px;
+    border-radius: 15px;
+    padding: 70px 60px;
+}
+
+form p {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #004;
+    margin-left: 20px;
+}
+
+form input {
+    padding: 10px 80px;
+    padding-right: 0px;
+    width: 90%;
+    padding-left: 8px;
+    border: 1px solid #004;
+    border-radius: 10px;
+    color: #004;
+    align-self: center;
+    justify-self: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+
+form input::placeholder {
+    padding-left: 8px;
+}
+
+.c-signuptext {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 0.9rem;
+    color: #004;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.csignup {
+    background: transparent;
+    color: #004;
+    font-weight: bold;
+    border: none;
+}
+
+form input[type="submit"] {
+    background: #004;
+    padding: 7px 20px;
+    margin-top: 20px;
+    display: block;
+    align-self: center;
+    justify-self: center;
+    place-items: center;
+    border-radius: 15px;
+    color: #ccc;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}

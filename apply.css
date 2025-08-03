@@ -1,0 +1,93 @@
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      color: #222;
+    }
+
+    .main-container {
+      margin-left: 250px; /* space for sidebar */
+      padding: 40px;
+    }
+
+    .brainstorm-header {
+      background-color: #004;
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    .brainstorm-header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .brainstorm-details {
+      background: white;
+      margin-top: 20px;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .detail-item {
+      margin-bottom: 15px;
+    }
+
+    .detail-item strong {
+      color: #004;
+    }
+
+    .courses-section {
+      margin-top: 30px;
+    }
+
+    .courses-section h3 {
+      color: #004;
+      margin-bottom: 15px;
+    }
+
+    .courses-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .course-card {
+      background: #fff;
+      padding: 15px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .course-card:hover {
+      border-color: #004;
+      background: #f0f4ff;
+    }
+
+    .course-card input {
+      margin-right: 10px;
+    }
+
+    .apply-btn {
+      margin-top: 30px;
+      background: #004;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .apply-btn:hover {
+      background: #002255;
+    }
+
+    .note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: red;
+    }

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Dashboard</title>
+    <link rel="stylesheet" href="maindashbord.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">TestMaster</div>
+            <div class="user-info">
+                <span class="subscription-badge free-plan">Free Plan</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="profile-section">
+                    <div class="profile-pic locked">MO</div>
+                    <div class="user-name">Mukhiteee</div>
+                    <div class="user-email">mukhiteee@gmail.com</div>
+                </div>
+
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <span class="nav-icon">🏠</span>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mycourses.html" class="nav-link">
+                                <span class="nav-icon">📚</span>
+                                My Courses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="testmaster_exam_system (1).html" class="nav-link">
+                                <span class="nav-icon">📝</span>
+                                Take Exam
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">📊</span>
+                                Results
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">⚙️</span>
+                                Settings
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">💎</span>
+                                Upgrade Plan
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Welcome back, Mukhiteee!</h1>
+                    <p class="welcome-subtitle">Ready to continue your learning journey?</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Courses Enrolled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Exams Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Hours Studied</div>
+                    </div>
+                </div>
+
+                <!-- Free Plan Limitations Notice -->
+                <div class="limitation-notice">
+                    <strong>Free Plan Limitations:</strong> You have access to 3 courses and can take up to 5 exams per month. 
+                    Profile editing is locked. <a href="#" style="color: #004; font-weight: bold;">Upgrade to unlock all features!</a>
+                </div><br>
+
+                <!-- My Courses -->
+                <div class="actions-section">
+                    <h2 class="section-title">My Courses</h2>
+                    <div class="action-buttons">
+                        <div class="action-card" onclick="startCourse()">
+                            <div class="action-icon">📖</div>
+                            <div class="action-title">CHEM 112</div>
+                            <div class="action-description">Introduction To Physical Chemistry</div>
+                        </div>
+                        <div class="action-card" onclick="takeExam()">
+                            <div class="action-icon">📝</div>
+                            <div class="action-title">PHY 162</div>
+                            <div class="action-description">Introduction To Practical Chemistry II</div>
+                        </div>
+                        <div class="action-card" onclick="viewResults()">
+                            <div class="action-icon">📊</div>
+                            <div class="action-title">MATH 102</div>
+                            <div class="action-description">Algebra</div>
+                        </div>
+                        <div class="action-card" onclick="browseCourses()">
+                            <div class="action-icon">🔍</div>
+                            <div class="action-title">ENGG 102</div>
+                            <div class="action-description">History Of Engineering</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Quick Actions -->
+                <div class="actions-section">
+                    <h2 class="section-title">Quick Actions</h2>
+                    <div class="action-buttons">
+                        <div class="action-card" onclick="startCourse()">
+                            <div class="action-icon">📖</div>
+                            <div class="action-title">Continue Course</div>
+                            <div class="action-description">Resume your current chapter and keep progressing</div>
+                        </div>
+                        <div class="action-card" onclick="takeExam()">
+                            <div class="action-icon">📝</div>
+                            <div class="action-title">Take Practice Exam</div>
+                            <div class="action-description">Test your knowledge with practice questions</div>
+                        </div>
+                        <div class="action-card" onclick="viewResults()">
+                            <div class="action-icon">📊</div>
+                            <div class="action-title">View Results</div>
+                            <div class="action-description">Check your exam scores and progress</div>
+                        </div>
+                        <div class="action-card" onclick="browseCourses()">
+                            <div class="action-icon">🔍</div>
+                            <div class="action-title">Browse Courses</div>
+                            <div class="action-description">Discover new courses to expand your knowledge</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h2 class="section-title">Recent Activity</h2>
+                    <div class="activity-item">
+                        <div class="activity-icon">✅</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Completed Chapter 2: Data Structures</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">📝</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Scored 92% on JavaScript Fundamentals Exam</div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">📚</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Started new course: Advanced Algorithms</div>
+                            <div class="activity-time">3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="maindashbord.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+function prepareExamData(e) {
+  e.preventDefault();
+
+  if (userRole === 'free' && selectedExamType === 'custom') {
+    alert("Custom exams are only for premium users.");
+    return;
+  }
+  if (userRole === 'free' && selectedExamType === 'normal' && attemptCount >= 3) {
+    alert("You have reached your daily limit of 3 normal exams.");
+    return;
+  }
+
+  if (selectedExamType === 'custom') {
+    document.getElementById('questionCountInput').value = document.getElementById('qCount').value;
+    document.getElementById('timeLimitInput').value = document.getElementById('qTime').value;
+    document.getElementById('difficultyInput').value = document.getElementById('qDiff').value;
+  } else {
+    document.getElementById('questionCountInput').value = 0;
+    document.getElementById('timeLimitInput').value = 0;
+    document.getElementById('difficultyInput').value = '';
+  }
+
+  document.getElementById('examSetupForm').submit();
+}

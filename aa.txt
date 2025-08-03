@@ -1,0 +1,77 @@
+<?php
+
+require 'config.php';
+session_start();
+
+if (isset($_POST['create'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = $_POST['role'];
+
+    $stmt = $pdo->prepare("INSERT INTO admins (name, email, password, role) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$name, $email, $password, $role]);
+
+    echo "<script>alert('Admin account created!');</script>";
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Admin - TestMaster</title>
+  <style>
+    body {
+      background: #f4f4f4;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-box {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      color: #0d0;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      background: #0d0;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <form class="form-box" method="POST">
+    <h2>Create Admin</h2>
+    <input type="text" name="name" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <select name="role" required>
+      <option value="">Select Role</option>
+      <option value="admin">Admin</option>
+      <option value="superadmin">Superadmin</option>
+    </select>
+    <button type="submit" name="create">Create Admin</button>
+  </form>
+</body>
+</html>
